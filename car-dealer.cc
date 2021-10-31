@@ -8,6 +8,8 @@
 #include <iostream>
 #include <iomanip>
 #include <cstdlib>
+#include <fstream>
+#include <vector>
 using namespace std;
 
 /**
@@ -19,12 +21,34 @@ using namespace std;
 int getInteger();
 
 
+struct Option {
+    int price;
+    string name;
+};
+
 int main(int argc, char const *argv[]) {
     int choice;
+    string lineIn;
+
+    vector<Option> options;
 
     // read options file
+    ifstream optionFile;
+    optionFile.open("options.txt");
+    if (optionFile.fail()) {
+		cout << "Failed to open file." << endl;
+		exit(0);
+	}
 
     // load options
+    while (getline(optionFile, lineIn)) {
+        Option option;
+        int spaceIndex = lineIn.find(" ");
+        option.price = stoi(lineIn.substr(0, spaceIndex));
+        option.name = lineIn.substr((spaceIndex + 1), (lineIn.length() - spaceIndex));
+
+        options.push_back(option);
+    }
 
     while (true) {
         // display menu and get choice
@@ -36,7 +60,7 @@ int main(int argc, char const *argv[]) {
         cout << "6. Quit" << endl;
         cout << "Enter a choice: ";
         choice = getInteger();
-        
+
         // display selected options
 
         // show menu
