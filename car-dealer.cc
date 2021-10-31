@@ -1,8 +1,8 @@
 /**
  *   @file: car-dealer.cc
- * @author: Enter your name
- *   @date: Enter the date
- *  @brief: Add Description
+ * @author: Josh Marusek
+ *   @date: 2021-10-30
+ *  @brief: Gets a user's car order
  */
 
 #include <iostream>
@@ -13,7 +13,14 @@ using namespace std;
 ///function prototypes
 
 int main(int argc, char const *argv[]) {
+    // read options file
 
-    /*add code*/
+    // load options
+
+    // display selected options
+
+    // show menu
+
+    // get choice
     return 0;
 }/// main
