@@ -167,7 +167,7 @@ int main(int argc, char const *argv[]) {
                 addOption(options, selectedOptions, selectedModel);
                 break;
             case 4:
-                
+                removeOption(options, selectedOptions, selectedModel);
                 break;
             case 5:
                 selectedModel = ' ';
@@ -289,7 +289,7 @@ void removeOption(vector <Option> options, vector <int> &selectedOptions, char s
         getline(cin, optionChoice);
         optionChoice = stringToUpper(optionChoice);
 
-        for (size_t i = 0; i < options.size(); i++) {
+        for (size_t i = 0; i < selectedOptions.size(); i++) {
             if (optionChoice == options[selectedOptions[i]].nameInCaps) {
                 selectedOptions.erase(selectedOptions.begin() + i);
                 break;
