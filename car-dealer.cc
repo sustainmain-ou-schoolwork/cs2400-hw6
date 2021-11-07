@@ -19,12 +19,12 @@ struct Option {
 };
 
 /**
- *  Function: getInteger
+ *  Function: readInteger
  *  @brief Attempts to read integers from cin until a positive integer is entered.
  * 
  *  @return a positive integer from cin
  */
-int getInteger();
+int readInteger();
 
 /**
  *  Function: stringToUpper
@@ -54,6 +54,14 @@ string stringToUpper(string input);
  *  @return the price of the car
  */
 double calculatePrice(char model, vector <int> selectedOptions, vector <Option> options);
+
+/**
+ *  Function: readModel
+ *  @brief Attempts to read models from cin until a valid model is entered.
+ * 
+ *  @return a valid model from cin
+ */
+char readModel();
 
 
 int main(int argc, char const *argv[]) {
@@ -118,12 +126,11 @@ int main(int argc, char const *argv[]) {
         cout << "5. Cancel order" << endl;
         cout << "6. Quit" << endl;
         cout << "Enter a choice: ";
-        int menuChoice = getInteger();
+        int menuChoice = readInteger();
 
         switch (menuChoice) {
             case 1:
-                cout << "Enter the model (E, L, X): ";
-                selectedModel = toupper(cin.get());
+                selectedModel = readModel();
                 break;
             case 2:
                 cout << "Prices for model E, L, & X: $10000.00, $12000.00, $18000.00" << endl;
@@ -197,7 +204,7 @@ int main(int argc, char const *argv[]) {
 }/// main
 
 
-int getInteger() {
+int readInteger() {
     int result;
     do {
         cin >> result;
@@ -238,4 +245,15 @@ double calculatePrice(char model, vector <int> selectedOptions, vector <Option> 
     }
     
     return price;
+}
+
+char readModel() {
+    char model;
+    do {
+        cout << "Enter the model (E, L, X): ";
+        model = toupper(cin.get());
+        cin.ignore(1, '\n');  // discard newline at the end
+    } while (! (model == 'E' || model == 'L' || model == 'X'));
+
+    return model;
 }
