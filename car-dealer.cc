@@ -63,6 +63,14 @@ double calculatePrice(char model, vector <int> selectedOptions, vector <Option> 
  */
 char readModel();
 
+/**
+ *  Function: printOptions
+ *  @brief Prints all available options along with their prices.
+ * 
+ *  @param options the vector containing all the possible options
+ */
+void printOptions(vector <Option> options);
+
 
 int main(int argc, char const *argv[]) {
     bool quit = false;
@@ -133,17 +141,7 @@ int main(int argc, char const *argv[]) {
                 selectedModel = readModel();
                 break;
             case 2:
-                cout << "Prices for model E, L, & X: $10000.00, $12000.00, $18000.00" << endl;
-                cout << "Available options" << endl;
-                cout << endl;
-
-                // print all the options and prices, divided into three columns
-                for (int i = 0; i < (static_cast<double>(options.size()) / 3); i++) {
-                    for (int j = 0; j < 3; j++) {
-                        cout << left << setw(30) << (options[(i * 3) + j].name + "($" + to_string(options[(i * 3) + j].price) + ")");
-                    }
-                    cout << endl;
-                }
+                printOptions(options);
                 break;
             case 3:
                 if (selectedModel != ' ') {
@@ -256,4 +254,18 @@ char readModel() {
     } while (! (model == 'E' || model == 'L' || model == 'X'));
 
     return model;
+}
+
+void printOptions(vector <Option> options) {
+    cout << "Prices for model E, L, & X: $10000.00, $12000.00, $18000.00" << endl;
+    cout << "Available options" << endl;
+    cout << endl;
+
+    // print all the options and prices, divided into three columns
+    for (int i = 0; i < (static_cast<double>(options.size()) / 3); i++) {
+        for (int j = 0; j < 3; j++) {
+            cout << left << setw(30) << (options[(i * 3) + j].name + "($" + to_string(options[(i * 3) + j].price) + ")");
+        }
+        cout << endl;
+    }
 }
