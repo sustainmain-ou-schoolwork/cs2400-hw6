@@ -91,6 +91,15 @@ void addOption(vector <Option> options, vector <int> &selectedOptions, char sele
  */
 void removeOption(vector <Option> options, vector <int> &selectedOptions, char selectedModel);
 
+/**
+ *  Function: resetOrder
+ *  @brief Clears all selected options and the selected model.
+ * 
+ *  @param selectedOptions the vector containing all the selected options
+ *  @param selectedModel the char containing the car model selected
+ */
+void resetOrder(vector <int> &selectedOptions, char &selectedModel);
+
 
 int main(int argc, char const *argv[]) {
     bool quit = false;
@@ -170,10 +179,7 @@ int main(int argc, char const *argv[]) {
                 removeOption(options, selectedOptions, selectedModel);
                 break;
             case 5:
-                selectedModel = ' ';
-                while (selectedOptions.size() > 0) {
-                    selectedOptions.erase(selectedOptions.begin());
-                }
+                resetOrder(selectedOptions, selectedModel);
                 break;
             case 6:
                 quit = true;
@@ -295,5 +301,12 @@ void removeOption(vector <Option> options, vector <int> &selectedOptions, char s
                 break;
             }
         }
+    }
+}
+
+void resetOrder(vector <int> &selectedOptions, char &selectedModel) {
+    selectedModel = ' ';
+    while (selectedOptions.size() > 0) {
+        selectedOptions.erase(selectedOptions.begin());
     }
 }
