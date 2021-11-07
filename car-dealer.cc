@@ -73,13 +73,24 @@ void printOptions(vector <Option> options);
 
 /**
  *  Function: addOption
- *  @brief Prints all available options along with their prices.
+ *  @brief Prompts the user for which option to add and adds it to the selectedOptions vector.
  * 
  *  @param options the vector containing all the possible options
  *  @param selectedOptions the vector containing all the selected options
  *  @param selectedModel the car model selected
  */
 void addOption(vector <Option> options, vector <int> &selectedOptions, char selectedModel);
+
+/**
+ *  Function: removeOption
+ *  @brief Prompts the user for which option to remove and removes it from the selectedOptions vector.
+ * 
+ *  @param options the vector containing all the possible options
+ *  @param selectedOptions the vector containing all the selected options
+ *  @param selectedModel the car model selected
+ */
+void removeOption(vector <Option> options, vector <int> &selectedOptions, char selectedModel);
+
 
 int main(int argc, char const *argv[]) {
     bool quit = false;
@@ -156,19 +167,7 @@ int main(int argc, char const *argv[]) {
                 addOption(options, selectedOptions, selectedModel);
                 break;
             case 4:
-                if (selectedModel != ' ') {
-                    cout << "Enter option: ";
-                    string optionChoice;
-                    getline(cin, optionChoice);
-                    optionChoice = stringToUpper(optionChoice);
-
-                    for (size_t i = 0; i < options.size(); i++) {
-                        if (optionChoice == options[selectedOptions[i]].nameInCaps) {
-                            selectedOptions.erase(selectedOptions.begin() + i);
-                            break;
-                        }
-                    }
-                }
+                
                 break;
             case 5:
                 selectedModel = ' ';
@@ -278,6 +277,22 @@ void addOption(vector <Option> options, vector <int> &selectedOptions, char sele
                         break;
                     }
                 }
+            }
+        }
+    }
+}
+
+void removeOption(vector <Option> options, vector <int> &selectedOptions, char selectedModel) {
+    if (selectedModel != ' ') {
+        cout << "Enter option: ";
+        string optionChoice;
+        getline(cin, optionChoice);
+        optionChoice = stringToUpper(optionChoice);
+
+        for (size_t i = 0; i < options.size(); i++) {
+            if (optionChoice == options[selectedOptions[i]].nameInCaps) {
+                selectedOptions.erase(selectedOptions.begin() + i);
+                break;
             }
         }
     }
