@@ -145,19 +145,21 @@ int main(int argc, char const *argv[]) {
                     getline(cin, optionChoice);
                     optionChoice = stringToUpper(optionChoice);
 
-                    bool found = false;
-                    for (size_t i = 0; i < selectedOptions.size(); i++){
-                        if (options[selectedOptions[i]].nameInCaps == optionChoice) {
-                            found = true;
-                            break;
-                        }
-                    }
-
-                    if (!found) {
-                        for (size_t i = 0; i < options.size(); i++) {
-                            if (optionChoice == options[i].nameInCaps) {
-                                selectedOptions.push_back(i);
+                    if (selectedOptions.size() < 6) {
+                        bool found = false;
+                        for (size_t i = 0; i < selectedOptions.size(); i++){
+                            if (options[selectedOptions[i]].nameInCaps == optionChoice) {
+                                found = true;
                                 break;
+                            }
+                        }
+
+                        if (!found) {
+                            for (size_t i = 0; i < options.size(); i++) {
+                                if (optionChoice == options[i].nameInCaps) {
+                                    selectedOptions.push_back(i);
+                                    break;
+                                }
                             }
                         }
                     }
