@@ -71,6 +71,15 @@ char readModel();
  */
 void printOptions(vector <Option> options);
 
+/**
+ *  Function: addOption
+ *  @brief Prints all available options along with their prices.
+ * 
+ *  @param options the vector containing all the possible options
+ *  @param selectedOptions the vector containing all the selected options
+ *  @param selectedModel the car model selected
+ */
+void addOption(vector <Option> options, vector <int> &selectedOptions, char selectedModel);
 
 int main(int argc, char const *argv[]) {
     bool quit = false;
@@ -144,31 +153,7 @@ int main(int argc, char const *argv[]) {
                 printOptions(options);
                 break;
             case 3:
-                if (selectedModel != ' ') {
-                    cout << "Enter option: ";
-                    string optionChoice;
-                    getline(cin, optionChoice);
-                    optionChoice = stringToUpper(optionChoice);
-
-                    if (selectedOptions.size() < 6) {
-                        bool found = false;
-                        for (size_t i = 0; i < selectedOptions.size(); i++){
-                            if (options[selectedOptions[i]].nameInCaps == optionChoice) {
-                                found = true;
-                                break;
-                            }
-                        }
-
-                        if (!found) {
-                            for (size_t i = 0; i < options.size(); i++) {
-                                if (optionChoice == options[i].nameInCaps) {
-                                    selectedOptions.push_back(i);
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
+                addOption(options, selectedOptions, selectedModel);
                 break;
             case 4:
                 if (selectedModel != ' ') {
@@ -267,5 +252,33 @@ void printOptions(vector <Option> options) {
             cout << left << setw(30) << (options[(i * 3) + j].name + "($" + to_string(options[(i * 3) + j].price) + ")");
         }
         cout << endl;
+    }
+}
+
+void addOption(vector <Option> options, vector <int> &selectedOptions, char selectedModel) {
+    if (selectedModel != ' ') {
+        cout << "Enter option: ";
+        string optionChoice;
+        getline(cin, optionChoice);
+        optionChoice = stringToUpper(optionChoice);
+
+        if (selectedOptions.size() < 6) {
+            bool found = false;
+            for (size_t i = 0; i < selectedOptions.size(); i++){
+                if (options[selectedOptions[i]].nameInCaps == optionChoice) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                for (size_t i = 0; i < options.size(); i++) {
+                    if (optionChoice == options[i].nameInCaps) {
+                        selectedOptions.push_back(i);
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
