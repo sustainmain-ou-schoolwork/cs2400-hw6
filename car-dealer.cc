@@ -15,7 +15,7 @@ using namespace std;
 struct Option {
     int price;
     string name;
-    string nameInCaps;
+    string nameInCaps;  // name of the option in all capital letters
 };
 
 /**
@@ -36,15 +36,6 @@ int readInteger();
 string stringToUpper(string input);
 
 /**
- *  Function: stringToUpper
- *  @brief Converts an entire string to uppercase.
- * 
- *  @param input the string to be converted
- *  @return the string in uppercase
- */
-string stringToUpper(string input);
-
-/**
  *  Function: calculatePrice
  *  @brief Calculates the price of a car.
  * 
@@ -53,7 +44,7 @@ string stringToUpper(string input);
  *  @param options the vector containing all the possible options
  *  @return the price of the car
  */
-double calculatePrice(char model, vector <int> selectedOptions, vector <Option> options);
+double calculatePrice(char model, vector<int> selectedOptions, vector<Option> options);
 
 /**
  *  Function: readModel
@@ -69,7 +60,7 @@ char readModel();
  * 
  *  @param options the vector containing all the possible options
  */
-void printOptions(vector <Option> options);
+void printOptions(vector<Option> options);
 
 /**
  *  Function: addOption
@@ -79,7 +70,7 @@ void printOptions(vector <Option> options);
  *  @param selectedOptions the vector containing all the selected options
  *  @param selectedModel the car model selected
  */
-void addOption(vector <Option> options, vector <int> &selectedOptions, char selectedModel);
+void addOption(vector<Option> options, vector<int> &selectedOptions, char selectedModel);
 
 /**
  *  Function: removeOption
@@ -89,7 +80,7 @@ void addOption(vector <Option> options, vector <int> &selectedOptions, char sele
  *  @param selectedOptions the vector containing all the selected options
  *  @param selectedModel the car model selected
  */
-void removeOption(vector <Option> options, vector <int> &selectedOptions, char selectedModel);
+void removeOption(vector<Option> options, vector<int> &selectedOptions, char selectedModel);
 
 /**
  *  Function: resetOrder
@@ -98,18 +89,18 @@ void removeOption(vector <Option> options, vector <int> &selectedOptions, char s
  *  @param selectedOptions the vector containing all the selected options
  *  @param selectedModel the char containing the car model selected
  */
-void resetOrder(vector <int> &selectedOptions, char &selectedModel);
+void resetOrder(vector<int> &selectedOptions, char &selectedModel);
 
 
 int main(int argc, char const *argv[]) {
-    bool quit = false;
-    ifstream optionFile;
-    string lineIn;
+    bool quit = false;    // false until user selects quit in the main menu
+    ifstream optionFile;  // file with the option data
+    string lineIn;        // lines of data from the options file will be stored here
     
-    vector <int> selectedOptions;
-    char selectedModel = ' ';
+    vector<int> selectedOptions;  // contains all the numbers corresponding to the indices of options that were selected
+    char selectedModel = ' ';     // which car model the user selected
 
-    vector<Option> options;
+    vector<Option> options;  // contains all the possible options
 
 
     // read options file
@@ -119,7 +110,7 @@ int main(int argc, char const *argv[]) {
 		exit(0);
 	}
 
-    // load options
+    // load options line by line
     while (getline(optionFile, lineIn)) {
         Option option;
         int spaceIndex = lineIn.find(" ");
@@ -193,6 +184,7 @@ int main(int argc, char const *argv[]) {
 
 
 int readInteger() {
+    // get positive integer
     int result;
     do {
         cin >> result;
@@ -214,9 +206,10 @@ string stringToUpper(string input) {
     return output;
 }
 
-double calculatePrice(char model, vector <int> selectedOptions, vector <Option> options) {
+double calculatePrice(char model, vector<int> selectedOptions, vector<Option> options) {
     double price = 0;
 
+    // add cost for model
     switch (model) {
         case 'E':
             price += 10000;
@@ -228,6 +221,7 @@ double calculatePrice(char model, vector <int> selectedOptions, vector <Option> 
             price += 18000;
     }
 
+    // add costs for options
     for (size_t i = 0; i < selectedOptions.size(); i++) {
         price += options[selectedOptions[i]].price;
     }
@@ -246,13 +240,14 @@ char readModel() {
     return model;
 }
 
-void printOptions(vector <Option> options) {
+void printOptions(vector<Option> options) {
     cout << "Prices for model E, L, & X: $10000.00, $12000.00, $18000.00" << endl;
     cout << "Available options" << endl;
     cout << endl;
 
     // print all the options and prices, divided into three columns
     for (int i = 0; i < (static_cast<double>(options.size()) / 3); i++) {
+        // print a row
         for (int j = 0; j < 3; j++) {
             cout << left << setw(30) << (options[(i * 3) + j].name + "($" + to_string(options[(i * 3) + j].price) + ")");
         }
@@ -260,14 +255,15 @@ void printOptions(vector <Option> options) {
     }
 }
 
-void addOption(vector <Option> options, vector <int> &selectedOptions, char selectedModel) {
+void addOption(vector<Option> options, vector<int> &selectedOptions, char selectedModel) {
     if (selectedModel != ' ') {
         cout << "Enter option: ";
         string optionChoice;
         getline(cin, optionChoice);
         optionChoice = stringToUpper(optionChoice);
 
-        if (selectedOptions.size() < 6) {
+        if (selectedOptions.size() < 6) {  // limit to 6 options
+            // iterate through all the selected options to see if the new option was already added
             bool found = false;
             for (size_t i = 0; i < selectedOptions.size(); i++){
                 if (options[selectedOptions[i]].nameInCaps == optionChoice) {
@@ -276,6 +272,7 @@ void addOption(vector <Option> options, vector <int> &selectedOptions, char sele
                 }
             }
 
+            // add the new option to selectedOptions
             if (!found) {
                 for (size_t i = 0; i < options.size(); i++) {
                     if (optionChoice == options[i].nameInCaps) {
@@ -288,13 +285,14 @@ void addOption(vector <Option> options, vector <int> &selectedOptions, char sele
     }
 }
 
-void removeOption(vector <Option> options, vector <int> &selectedOptions, char selectedModel) {
+void removeOption(vector<Option> options, vector<int> &selectedOptions, char selectedModel) {
     if (selectedModel != ' ') {
         cout << "Enter option: ";
         string optionChoice;
         getline(cin, optionChoice);
         optionChoice = stringToUpper(optionChoice);
 
+        // iterate through all the selected options until the right one is found, then delete that element
         for (size_t i = 0; i < selectedOptions.size(); i++) {
             if (optionChoice == options[selectedOptions[i]].nameInCaps) {
                 selectedOptions.erase(selectedOptions.begin() + i);
@@ -304,8 +302,11 @@ void removeOption(vector <Option> options, vector <int> &selectedOptions, char s
     }
 }
 
-void resetOrder(vector <int> &selectedOptions, char &selectedModel) {
+void resetOrder(vector<int> &selectedOptions, char &selectedModel) {
+    // set selectedModel to default
     selectedModel = ' ';
+
+    // remove all selected options
     while (selectedOptions.size() > 0) {
         selectedOptions.erase(selectedOptions.begin());
     }
